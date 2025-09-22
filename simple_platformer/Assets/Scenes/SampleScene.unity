@@ -592,6 +592,7 @@ MonoBehaviour:
   Speed: 5
   JumpForce: 300
   rb_player: {fileID: 2002383964}
+  tf_player: {fileID: 2002383960}
 --- !u!4 &1798246457
 Transform:
   m_ObjectHideFlags: 0
