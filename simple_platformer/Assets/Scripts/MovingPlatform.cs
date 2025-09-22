@@ -2,15 +2,29 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float Speed = 2f;
+    public float Distance = 3f;
+    private Vector3 startPos;
+    //private Vector3 middlePos;
+    //private Vector3 offset;
+    private void Start()
     {
-        
+        startPos = transform.position;
+    //    middlePos = startPos;
     }
-
-    // Update is called once per frame
-    void Update()
+void Update()
     {
-        
+        float movement = Mathf.Abs(Mathf.Sin(Time.time * Speed)) * Distance;
+        transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + movement);
+        //offset = middlePos - transform.position;
+        //middlePos = transform.position;
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        Transform player_transform = collision.transform;
+    //        player_transform.Translate(0, 0, offset.z);
+    //    }
+    //}
 }
