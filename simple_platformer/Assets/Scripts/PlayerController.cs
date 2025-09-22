@@ -6,12 +6,14 @@ public class PlayerController : MonoBehaviour
     public float JumpForce = 300f;
 
     [SerializeField] private Rigidbody rb_player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private Transform tf_player;
+
+    private Vector3 ray_offset = new Vector3();
+
     void Start()
     {
+        ray_offset = tf_player.position + new Vector3(0, -0.51f, 0);
     }
-
-    // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -19,7 +21,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
-            rb_player.AddForce(Vector3.up * JumpForce);
+            if (Physics.Raycast(ray_offset, new Vector3(0, 0, 90), 100f))
+            {
+                rb_player.AddForce(Vector3.up * JumpForce);
+            }
         }
     }
 }
