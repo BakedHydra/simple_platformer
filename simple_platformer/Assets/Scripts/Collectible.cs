@@ -1,3 +1,4 @@
+using UnityEditor.UI;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
@@ -7,6 +8,7 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
+            FindFirstObjectByType<ExitScript>().GetComponent<ExitScript>().coin_counter++;
         }
     }
 }
