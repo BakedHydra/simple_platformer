@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Mathf;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,24 +8,28 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody rb_player;
     [SerializeField] private Transform tf_player;
-
-    private Vector3 ray_offset;
-    void Update()
+    [SerializeField] private Animator anim_player;
+    [SerializeField] private float linear_velocity;
+    void FixedUpdate()
     {
+        float local_speed = 0f;
         if (Time.timeScale > 0.0f)
         {
-            ray_offset = tf_player.position + new Vector3(0, -0.4f, 0);
-            Ray ray = new(ray_offset, Vector3.down);
             float horizontal = Input.GetAxis("Horizontal");
-            transform.Translate(horizontal * Speed * Time.deltaTime, 0, 0);
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+            if (horizontal != 0)
             {
-                if (Physics.Raycast(ray, out _, 0.33f))
-                {
-                    rb_player.AddForce(Vector3.up * JumpForce);
+                local_speed = Speed;
+                if (Input.GetKey(KeyCode.LeftShift)) { local_speed += 10f;}
+                if (Abs(rb_player.linearVelocity.x) < local_speed)
+                { 
+                    rb_player.AddForce(new Vector3(horizontal * local_speed, 0, 0), ForceMode.VelocityChange);
                 }
+                linear_velocity = rb_player.linearVelocity.x;
             }
-
+            if (anim_player != null)
+            {
+                anim_player.SetFloat("Speed", local_speed);
+            }
         }
     }
 }
