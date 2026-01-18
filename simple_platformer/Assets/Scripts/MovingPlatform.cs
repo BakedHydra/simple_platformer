@@ -15,7 +15,7 @@ public class MovingPlatform : MonoBehaviour
 void Update()
     {
         float movement = Mathf.Abs(Mathf.Sin(Time.time * Speed)) * Distance;
-        transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + movement);
+        transform.position = new Vector3(startPos.x - movement, transform.position.y, transform.position.z);
         //offset = middlePos - transform.position;
         //middlePos = transform.position;
     }
